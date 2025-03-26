@@ -8,7 +8,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    role: "Customer", // backend ku thevaiyaana value
+    role: "Customer", 
   });
 
   const handleRegister = async (e) => {

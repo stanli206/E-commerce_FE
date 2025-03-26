@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Order = () => {
   const { user } = useContext(AuthContext);
@@ -36,13 +36,12 @@ const Order = () => {
         setAllItems(combinedItems);
         setTotalAmount(total);
       })
-      .catch(() => {
+      .catch((err) => {
         console.log(err);
         setLoading(false);
       });
-
   }, [user, navigate]);
-  
+
   const proceedToPayment = () => {
     if (!user || !user.token) {
       navigate("/login");
@@ -60,39 +59,61 @@ const Order = () => {
       .then((res) => {
         window.location.href = res.data.url;
       })
-      .catch(() => alert("Failed to proceed to payment"));
+      .catch(() => alert("Error processing payment!"));
   };
 
   return (
-    <div>
-      <h1>My Orders</h1>
+    <div className="p-5 min-h-screen bg-gray-100">
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        Your Orders
+      </h1>
 
       {loading ? (
-        <p>Loading Orders.....</p>
+        <p className="text-center">Loading orders...</p>
       ) : orders.length === 0 ? (
-        <p>No Orders placed yet.</p>
+        <p className="text-center text-gray-500">No orders placed yet.</p>
       ) : (
-        <div>
+        <div className="max-w-4xl mx-auto">
           {orders.map((order) => (
-              <div key={order._id}>
-                <h2>Order ID: {order._id}</h2>
-                <p><strong>Status:</strong>{order.status}</p>
-                <p><strong>Total Price:</strong>{order.totalPrice}</p>
+            <div
+              key={order._id}
+              className="bg-white shadow-md rounded p-5 mb-6"
+            >
+              <h2 className="text-xl font-semibold mb-2">
+                Order ID: <span className="text-blue-500">{order._id}</span>
+              </h2>
+              <p>
+                <strong>Status:</strong>{" "}
+                <span className="text-yellow-600">{order.status}</span>
+              </p>
+              <p>
+                <strong>Total Price:</strong>{" "}
+                <span className="text-green-600">${order.totalPrice}</span>
+              </p>
 
-                <h3>Items</h3>
-                {order.products ?.map((item, idx) => (
-                  <div key={idx}>
-                    <p><strong>Product Name:</strong>{item?.product?.name || "Product Not Found"}</p>
-                    <p><strong>Quantity:</strong>{item.quantity}</p>
-                    <p><strong>Price:</strong>{item?.product?.price || 0} x {item.quantity}</p>
-                  </div>
-                ))}
-              </div>
-            ))}
+              <h3 className="text-lg font-semibold mt-4 mb-2">🛍️ Items:</h3>
+              {order.products?.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="border rounded p-2 mb-2 flex justify-between items-center"
+                >
+                  <span>
+                    {item?.product?.name || "Product Not Found"} - $
+                    {item?.product?.price || 0} x {item.quantity}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ))}
+
           {orders.some((order) => order.status === "Pending") && (
-            <button onClick={proceedToPayment}>Proceed Payment</button>
+            <button
+              onClick={proceedToPayment}
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded shadow mt-4"
+            >
+              💳 Proceed to Payment
+            </button>
           )}
-              
         </div>
       )}
     </div>

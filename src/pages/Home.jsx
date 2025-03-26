@@ -13,7 +13,7 @@ const Home = () => {
     // Fetch Products
     axios
       .get("https://fsd-backend-demo-b17.onrender.com/api/products")
-      .then((res) => setProducts(res.data.data || [])) // ✅ fixed here
+      .then((res) => setProducts(res.data.data || [])) 
       .catch((err) => console.log("Product Error:", err));
 
     // Fetch Cart (only if user logged in)

@@ -19,7 +19,7 @@ const Navbar = () => {
           to="/"
           className="text-xl font-extrabold text-blue-600 tracking-wide"
         >
-          E-Commerce
+          🛒 E-Commerce
         </Link>
 
         <div className="flex space-x-6 items-center text-gray-700 font-medium">

@@ -39,7 +39,7 @@ const Login = () => {
         className="bg-white/60 backdrop-blur-md shadow-xl rounded-xl p-10 w-full max-w-md border border-white/40"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Welcome Back 👋
+          Welcome Back!
         </h2>
 
         <input
