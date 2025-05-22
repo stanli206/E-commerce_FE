@@ -16,7 +16,7 @@ const Cart = () => {
     }
 
     axios
-      .get("https://fsd-backend-demo-b17.onrender.com/api/cart/view", {
+      .get("https://ecommerce-698h.onrender.com/api/cart/view", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
@@ -43,7 +43,7 @@ const Cart = () => {
 
     axios
       .put(
-        `https://fsd-backend-demo-b17.onrender.com/api/cart/update/${productId}`,
+        `https://ecommerce-698h.onrender.com/api/cart/update/${productId}`,
         { change },
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -64,7 +64,7 @@ const Cart = () => {
   const removeFromCart = (productId) => {
     axios
       .delete(
-        `https://fsd-backend-demo-b17.onrender.com/api/cart/remove/${productId}`,
+        `https://ecommerce-698h.onrender.com/api/cart/remove/${productId}`,
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -87,7 +87,7 @@ const Cart = () => {
 
     axios
       .post(
-        "https://fsd-backend-demo-b17.onrender.com/api/orders/create",
+        "https://ecommerce-698h.onrender.com/api/orders/create",
         { cartItems: cart },
         {
           headers: { Authorization: `Bearer ${user.token}` },

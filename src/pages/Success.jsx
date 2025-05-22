@@ -17,7 +17,7 @@ const Success = () => {
     // Mark order as paid in backend
     axios
       .post(
-        "https://fsd-backend-demo-b17.onrender.com/api/orders/success",
+        "https://ecommerce-698h.onrender.com/api/orders/success",
         {},
         {
           headers: { Authorization: `Bearer ${user.token}` },

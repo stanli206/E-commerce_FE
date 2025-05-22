@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://fsd-backend-demo-b17.onrender.com/api/auth/login",
+        "https://ecommerce-698h.onrender.com/api/auth/login",
         {
           email,
           password,

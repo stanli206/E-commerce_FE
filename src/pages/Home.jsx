@@ -10,13 +10,11 @@ const Home = () => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    // Fetch Products
     axios
-      .get("https://fsd-backend-demo-b17.onrender.com/api/products")
-      .then((res) => setProducts(res.data.data || [])) 
+      .get("https://ecommerce-698h.onrender.com/api/products")
+      .then((res) => setProducts(res.data.data || []))
       .catch((err) => console.log("Product Error:", err));
 
-    // Fetch Cart (only if user logged in)
     if (user) {
       if (user.role === "Admin") {
         navigate("/admin");
@@ -24,7 +22,7 @@ const Home = () => {
       }
 
       axios
-        .get("https://fsd-backend-demo-b17.onrender.com/api/cart/view", {
+        .get("https://ecommerce-698h.onrender.com/api/cart/view", {
           headers: { Authorization: `Bearer ${user.token}` },
         })
         .then((res) => setCartItems(res.data.data.items || []))
@@ -32,7 +30,6 @@ const Home = () => {
     }
   }, [user, navigate]);
 
-  // Add to Cart
   const addToCart = (productId) => {
     if (!user) {
       alert("Please login to add items to cart!");
@@ -42,7 +39,7 @@ const Home = () => {
 
     axios
       .post(
-        "https://fsd-backend-demo-b17.onrender.com/api/cart/add",
+        "https://ecommerce-698h.onrender.com/api/cart/add",
         { productId, quantity: 1 },
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -54,15 +51,11 @@ const Home = () => {
       .catch(() => alert("Error adding to cart!"));
   };
 
-  //  Remove from Cart
   const removeFromCart = (productId) => {
     axios
-      .delete(
-        `https://fsd-backend-demo-b17.onrender.com/api/cart/remove/${productId}`,
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
+      .delete(`https://ecommerce-698h.onrender.com/api/cart/remove/${productId}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then(() => {
         setCartItems(
           cartItems.filter((item) => item.product._id !== productId)
@@ -72,15 +65,15 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] px-6 py-10">
-      <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 px-4 py-10">
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
         Explore Our <span className="text-blue-600">Products</span>
       </h1>
 
       {products.length === 0 ? (
         <p className="text-center text-gray-600">No products available.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => {
             const inCart = cartItems.some(
               (item) => item.product._id === product._id
@@ -88,34 +81,41 @@ const Home = () => {
             return (
               <div
                 key={product._id}
-                className="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between transition-transform hover:scale-105"
+                className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col justify-between hover:shadow-xl transition duration-300"
               >
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-800">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-52 object-contain bg-white p-2"
+                />
+
+                <div className="p-5 flex flex-col flex-1">
+                  <h2 className="text-lg font-semibold text-gray-800 mb-1">
                     {product.name}
                   </h2>
-                  <p className="text-blue-600 font-bold mt-1">
+                  <p className="text-blue-600 font-bold text-md">
                     ${product.price}
                   </p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    {product.description}
+                  <p className="text-sm text-gray-500 mt-2 flex-1">
+                    {product.description?.slice(0, 80)}...
                   </p>
+
+                  {inCart ? (
+                    <button
+                      onClick={() => removeFromCart(product._id)}
+                      className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-200"
+                    >
+                      Remove from Cart
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => addToCart(product._id)}
+                      className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-200"
+                    >
+                      Add to Cart
+                    </button>
+                  )}
                 </div>
-                {inCart ? (
-                  <button
-                    onClick={() => removeFromCart(product._id)}
-                    className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 rounded transition"
-                  >
-                    Remove from Cart
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => addToCart(product._id)}
-                    className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition"
-                  >
-                    Add to Cart
-                  </button>
-                )}
               </div>
             );
           })}

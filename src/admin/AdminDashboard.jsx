@@ -25,10 +25,10 @@ const AdminDashboard = () => {
     }
 
     Promise.all([
-      axios.get("https://fsd-backend-demo-b17.onrender.com/api/products", {
+      axios.get("https://ecommerce-698h.onrender.com/api/products", {
         headers: { Authorization: `Bearer ${user.token}` },
       }),
-      axios.get("https://fsd-backend-demo-b17.onrender.com/api/orders", {
+      axios.get("https://ecommerce-698h.onrender.com/api/orders", {
         headers: { Authorization: `Bearer ${user.token}` },
       }),
     ])
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
   const handleAddProduct = () => {
     axios
       .post(
-        "https://fsd-backend-demo-b17.onrender.com/api/products/create",
+        "https://ecommerce-698h.onrender.com/api/products/create",
         newProduct,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
   const handleUpdateProduct = () => {
     axios
       .put(
-        `https://fsd-backend-demo-b17.onrender.com/api/products/update/${editId}`,
+        `https://ecommerce-698h.onrender.com/api/products/update/${editId}`,
         newProduct,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
     if (confirm("Are you sure you want to delete this product?")) {
       axios
         .delete(
-          `https://fsd-backend-demo-b17.onrender.com/api/products/delete/${id}`,
+          `https://ecommerce-698h.onrender.com/api/products/delete/${id}`,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
   const handleStatusChange = (orderId, newStatus) => {
     axios
       .put(
-        `https://fsd-backend-demo-b17.onrender.com/api/orders/update/${orderId}`,
+        `https://ecommerce-698h.onrender.com/api/orders/update/${orderId}`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${user.token}` },

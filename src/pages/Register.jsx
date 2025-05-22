@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://fsd-backend-demo-b17.onrender.com/api/auth/register",
+        "https://ecommerce-698h.onrender.com/api/auth/register",
         userData
       );
       alert("Registration successful! Please login.");
